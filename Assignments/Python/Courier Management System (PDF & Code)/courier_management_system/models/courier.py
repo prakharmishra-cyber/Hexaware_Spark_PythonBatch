@@ -122,11 +122,11 @@ class Courier:
         print(f"Delivery Date: {self.get_delivery_date()}")
         print("---------------")
 
-    @staticmethod
-    def place_courier(self, sender_name, sender_address, receiver_name, receiver_address, weight, status,
+    @classmethod
+    def place_courier(cls, sender_name, sender_address, receiver_name, receiver_address, weight, status,
                       tracking_number, delivery_date):
         connection = get_db_connection()
-        my_cursor = self.connection.cursor()
+        my_cursor = connection.cursor()
 
         try:
             # Assuming that the CourierID is auto-incremented in the database

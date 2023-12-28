@@ -1,6 +1,4 @@
 import mysql.connector
-
-
 def get_db_connection():
     # Replace the following values with your MySQL server credentials
     config = {
