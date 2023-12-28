@@ -11,6 +11,13 @@ class Transaction:
         self.__amount = amount
         self.__transaction_date = transaction_date
 
+    def __str__(self):
+        return f"Transaction ID: {self.__transaction_id}\n" \
+               f"Account ID: {self.__account_id}\n" \
+               f"Transaction Type: {self.__transaction_type}\n" \
+               f"Amount: ${self.__amount:.2f}\n" \
+               f"Transaction Date: {self.__transaction_date}"
+
     def get_transaction_id(self):
         return self.__transaction_id
 

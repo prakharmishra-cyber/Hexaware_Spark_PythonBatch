@@ -43,7 +43,7 @@ class Bank:
             SELECT * FROM Accounts WHERE account_id = %s
             '''
             para = (account_id,)
-            my_cursor.execute()
+            my_cursor.execute(sql, para)
             x = Account(*list(my_cursor.fetchone()))
             return x
         except Exception as e:
@@ -78,7 +78,7 @@ class Bank:
 
         choice = input("Enter your choice (1 or 2): ")
 
-        account_id = input("Enter the account ID: ")
+        # account_id = input("Enter the account ID: ")
         customer_id = input("Enter the customer ID: ")
         initial_balance = float(input("Enter the initial balance: "))
 
@@ -153,37 +153,4 @@ class Bank:
             print(f'An error occurred: {e}')
 
 
-'''        
-if __name__ == "__main__":
-    bank = Bank()
 
-    while True:
-        print("\nBank Menu:")
-        print("1. Deposit")
-        print("2. Withdraw")
-        print("3. Create Account")
-        print("4. Calculate Interest")
-        print("5. Exit")
-
-        option = input("Enter your option (1-5): ")
-
-        if option == "1":
-            account_id = input("Enter the account ID: ")
-            amount = float(input("Enter the deposit amount: "))
-            bank.deposit(account_id, amount)
-        elif option == "2":
-            account_id = input("Enter the account ID: ")
-            amount = float(input("Enter the withdrawal amount: "))
-            bank.withdraw(account_id, amount)
-        elif option == "3":
-            bank.create_account()
-        elif option == "4":
-            account_id = input("Enter the account ID: ")
-            bank.calculate_interest(account_id)
-        elif option == "5":
-            print("Exiting the Bank. Goodbye!")
-            break
-        else:
-            print("Invalid option. Please choose a valid option (1-5).")
-            
-'''

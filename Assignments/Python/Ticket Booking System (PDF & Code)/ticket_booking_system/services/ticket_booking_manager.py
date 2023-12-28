@@ -15,7 +15,7 @@ class BookingSystem:
     def book_tickets(self):
         num_tickets = int(input("Enter the number of tickets to book: "))
         customer_id = int(input('Enter the customer id: '))
-        event_id = input('Enter the event ID')
+        event_id = input('Enter the event ID: ')
         temp_event = self.get_event_by_id(event_id)
         try:
             temp_event.book_tickets(customer_id, num_tickets, event_id, temp_event.get_ticket_price())
@@ -37,7 +37,7 @@ class BookingSystem:
             print(f'An error occurred: {e}')
 
     def cancel_booking(self):
-        event_id = input('Enter the event ID booking to cancel')
+        event_id = input('Enter the event ID booking to cancel: ')
         booking_id = input("Enter the booking ID to cancel: ")
         temp_event = self.get_event_by_id(event_id)
         try:

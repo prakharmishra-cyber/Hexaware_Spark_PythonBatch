@@ -13,7 +13,7 @@ class Course:
         self.__teacher = teacher
 
     def get_course_id(self):
-        return self.__course_name
+        return self.__course_id
 
     def get_course_name(self):
         return self.__course_name
@@ -74,4 +74,4 @@ class Course:
         print('Course Name', self.__course_name)
         print('Course Credits', self.__credits)
         print('Teacher Details:-')
-        print(self.__teacher.display_teacher_info())
+        print(self.__teacher)

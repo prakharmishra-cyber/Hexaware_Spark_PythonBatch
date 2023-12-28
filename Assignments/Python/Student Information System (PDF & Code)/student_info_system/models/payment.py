@@ -21,3 +21,9 @@ class Payment:
 
     def get_payment_date(self):
         return self.__payment_date
+
+    def display_payment_info(self):
+        print('Payment ID: ', self.__payment_id)
+        print('Student Details: ', self.__student)
+        print('Payment Amount: ', self.__amount)
+        print('Payment Date: ', self.__payment_date)

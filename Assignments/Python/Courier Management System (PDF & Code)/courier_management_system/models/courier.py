@@ -5,8 +5,10 @@ from db_connection.db_adapter import *
 
 
 class Courier:
+
+
     def __init__(self, courier_id, sender_name, sender_address, receiver_name, receiver_address, weight, status,
-                 tracking_number, delivery_date):
+                 tracking_number, delivery_date, user_id):
         self.connection = get_db_connection()
         self.__courier_id = courier_id
         self.__sender_name = sender_name
@@ -17,6 +19,7 @@ class Courier:
         self.__status = status
         self.__tracking_number = tracking_number
         self.__delivery_date = delivery_date
+        self.__user_id = user_id
 
     def get_courier_id(self):
         return self.__courier_id
@@ -119,6 +122,7 @@ class Courier:
         print(f"Delivery Date: {self.get_delivery_date()}")
         print("---------------")
 
+    @staticmethod
     def place_courier(self, sender_name, sender_address, receiver_name, receiver_address, weight, status,
                       tracking_number, delivery_date):
         connection = get_db_connection()
@@ -142,27 +146,14 @@ class Courier:
         finally:
             connection.close()
 
-    def cancel_courier(self, courierID):
-        my_cursor = self.connection.cursor()
-        courier_exists = get_cnts('courier', 'CourierID', courierID)
 
-        try:
-            if courier_exists > 0:
-                sql = '''DELETE FROM Courier WHERE CourierID = %s'''
-                para = (courier_exists,)
-                my_cursor.execute(sql, para)
-                self.connection.commit()
-                print('Courier Order deleted successfully')
-            else:
-                raise CourierNotFound('Invalid Courier ID')
-        except CourierNotFound as c:
-            print(c)
-        except Exception as e:
-            print('An error occurred', e)
+
 
     @classmethod
     def generate_tracking_number(cls):
         random_number = random.randint(100000, 999999)
         tracking_number = f"TN{random_number}"
         return tracking_number
+
+
 

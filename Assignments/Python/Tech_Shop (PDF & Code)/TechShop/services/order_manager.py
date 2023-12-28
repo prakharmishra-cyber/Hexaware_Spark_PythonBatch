@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from custom_exceptions.custom_exceptions import OrderNotFoundException
 from models.orders import Orders
 from models.products import Products
 # from services.inventory_manager import InventoryManager
@@ -66,3 +68,19 @@ class OrderManager:
 
     def list_all_orders(self):
         return getAllOrders()
+
+    def get_order_by_id(self, order_id):
+        try:
+            my_cursor = self.connection.cursor()
+            sql = '''SELECT * FROM Orders WHERE orderID = %s'''
+            para = (order_id,)
+            my_cursor.execute(sql, para)
+            x = my_cursor.fetchone()
+            if x is None:
+                raise OrderNotFoundException('Invalid Order ID')
+            else:
+                return Orders(*x)
+        except OrderNotFoundException as onfe:
+            print('An error occurred ',onfe)
+        except Exception as e:
+            print('An error occurred ',e)

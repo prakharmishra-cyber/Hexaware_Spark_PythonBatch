@@ -13,7 +13,8 @@ class InventoryManager:
             p1 = ProductManager()
             if p1.product_exists(product_id):
                 sql = 'UPDATE Inventory SET QuantityInStock = QunatityInStock + %s WHERE ProductID = %s'
-                mycursor.execute(sql)
+                para = (quantity,)
+                mycursor.execute(sql, para)
                 self.connection.commit()
             else:
                 print(f'Invalid ProductID')
@@ -29,7 +30,8 @@ class InventoryManager:
             p1 = ProductManager()
             if p1.product_exists(product_id):
                 sql = 'UPDATE Inventory SET QuantityInStock = QunatityInStock - %s WHERE ProductID = %s'
-                mycursor.execute(sql)
+                para = (quantity,)
+                mycursor.execute(sql, para)
                 self.connection.commit()
             else:
                 print(f"Error updating inventory: Product ID {product_id} not found")

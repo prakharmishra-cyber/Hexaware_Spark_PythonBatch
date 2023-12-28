@@ -10,6 +10,12 @@ class Account:
         self.__account_type = account_type
         self.__balance = balance
 
+    def __str__(self):
+        return f"Account ID: {self.__account_id}\n" \
+               f"Customer ID: {self.__customer_id}\n" \
+               f"Account Type: {self.__account_type}\n" \
+               f"Balance: ${self.__balance:.2f}"
+
     def get_account_id(self):
         return self.__account_id
 
@@ -49,7 +55,7 @@ class Account:
         try:
             my_cursor = self.connection.cursor()
             sql = '''
-                     UPDATE Accounts SET balance = %s WHERE acount_id = %
+                     UPDATE Accounts SET balance = %s WHERE account_id = %s
                     '''
             para = (self.__balance + amount, self.__account_id)
             my_cursor.execute(sql, para)
@@ -66,7 +72,7 @@ class Account:
         try:
             my_cursor = self.connection.cursor()
             sql = '''
-                     UPDATE Accounts SET balance = %s WHERE acount_id = %
+                     UPDATE Accounts SET balance = %s WHERE account_id = %s
                     '''
             para = (self.__balance - amount, self.__account_id)
             my_cursor.execute(sql, para)

@@ -60,7 +60,7 @@ class Event:
             my_cursor = self.connection.cursor()
             sql1 = '''
             INSERT INTO booking(booking_id, customer_id, event_id, num_tickets, total_cost, booking_date)
-            VALUES(%s, %s, %s, %s, %s)
+            VALUES(%s, %s, %s, %s, %s, %s)
             '''
             para1 = (get_ids('booking', 'booking_id'), customer_id, event_id, num_tickets, num_tickets*ticket_price, date.today())
             my_cursor.execute(sql1, para1)
@@ -79,7 +79,7 @@ class Event:
             my_cursor = self.connection.cursor()
             my_cursor.callproc('cancel_booking', [booking_id])
             self.connection.commit()
-            print('Ticket Booked successfully')
+            print('Ticket Cancelled successfully')
         except Exception as e:
             print(f'An error occurred: {e}')
 

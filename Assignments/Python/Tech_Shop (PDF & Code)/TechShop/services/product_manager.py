@@ -1,3 +1,4 @@
+from custom_exceptions.custom_exceptions import ProductNotFoundException
 from models.products import Products
 from db_connector.db_connector import get_db_connection
 
@@ -24,7 +25,7 @@ class ProductManager:
             para = (product.get_product_id(), product.get_product_name(), product.get_description(), product.get_price())
             cursor.execute(sql, para)
             self.connection.commit()
-            print(f"Product {product.product_id} added successfully.")
+            print(f"Product {product.get_product_id()} added successfully.")
         except Exception as e:
             print(f"Error adding product: {e}")
 
@@ -88,3 +89,21 @@ class ProductManager:
         t = list(mycursor.fetchall())
         x = [list(i) for i in t]
         return x
+
+    def get_product_by_id(self, product_id):
+        try:
+            my_cursor = self.connection.cursor()
+            sql = '''
+            SELECT * Products WHERE ProductID = %s
+            '''
+            para = (product_id,)
+            my_cursor.execute(sql, para)
+            x = my_cursor.fetchone()
+            if x is None:
+                raise ProductNotFoundException('Invalid product ID')
+            else:
+                return Products(*x)
+        except ProductNotFoundException as pnfe:
+            print('An error occurred: ', pnfe)
+        except Exception as e:
+            print( "An error occurred: ", e )

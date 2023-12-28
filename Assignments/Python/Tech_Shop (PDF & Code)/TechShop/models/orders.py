@@ -84,3 +84,4 @@ class Orders:
         para = ('Cancelled', self.__order_id)
         cursor.execute(sql, para)
         self.__order_status = "Cancelled"
+        print('Order successfully cancelled')

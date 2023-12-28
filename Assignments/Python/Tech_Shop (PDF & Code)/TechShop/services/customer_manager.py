@@ -1,4 +1,6 @@
 import re
+
+from custom_exceptions.custom_exceptions import CustomerNotFoundException
 from models.customers import Customers
 from db_connector.db_connector import get_db_connection
 class CustomerManager:
@@ -41,7 +43,23 @@ class CustomerManager:
             return True
         return False
 
+    def get_customer_by_id(self, customer_id):
+        try:
+            my_cursor = self.connection.cursor()
+            sql = '''SELECT * FROM Customers WHERE customer_id = %s'''
+            para = (customer_id,)
+            my_cursor.execute(sql, para)
+            x = my_cursor.fetchone()
+            if x is None:
+                raise CustomerNotFoundException('Invalid Customer ID')
+            else:
+                return Customers(*x)
+        except CustomerNotFoundException as cnfe:
+            print('An error occurred ',cnfe)
+        except Exception as e:
+            print('An error occurred ',e)
+
 
 # Example usage:
-customer_manager = CustomerManager()
-customer_manager.register_customer("Prakhar", "Mishra", "prakhar.mishra@example.com", '1990-05-01', "1234567890", 0,"Kanpur, UP, India")
+# customer_manager = CustomerManager()
+# customer_manager.register_customer("Prakhar", "Mishra", "prakhar.mishra@example.com", '1990-05-01', "1234567890", 0,"Kanpur, UP, India")

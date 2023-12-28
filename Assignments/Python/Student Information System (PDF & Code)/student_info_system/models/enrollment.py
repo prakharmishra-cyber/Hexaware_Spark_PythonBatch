@@ -20,3 +20,9 @@ class Enrollment:
 
     def get_enrollment_date(self):
         return self.__enrollment_date
+
+    def display_enrollment_info(self):
+        print('Enrollment ID: ', self.__enrollment_id)
+        print('Student Details: ', self.__student)
+        print('Course Details: ', self.__course)
+        print('Enrollment Date: ',self.__enrollment_date)

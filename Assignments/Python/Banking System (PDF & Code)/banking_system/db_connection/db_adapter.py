@@ -7,7 +7,7 @@ def get_db_connection():
         'user': 'root',
         'password': 'prakhar123',
         'host': 'localhost',
-        'database': 'sisdb'
+        'database': 'hmbank'
     }
 
     try:

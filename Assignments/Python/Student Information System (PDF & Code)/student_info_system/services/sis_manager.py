@@ -6,7 +6,7 @@ from models.student import Student
 from models.enrollment import Enrollment
 from models.teacher import Teacher
 from db_connector.db_adapter import get_ids
-
+from custom_exception.custom_exceptions import *
 
 class SISManager:
 
@@ -55,9 +55,10 @@ class SISManager:
                 WHERE Enrollments.course_id = %s
             '''
             para = (course.get_course_id(),)
+            # print(sql, para)
             my_cursor.execute(sql, para)
             x = [list(i) for i in list(my_cursor.fetchall())]
-            print(*x, sep='\n')
+            print(*x)
         except Exception as e:
             print(f'An error occurred: {e}')
 
@@ -85,8 +86,13 @@ class SISManager:
             '''
             para = (student_id,)
             my_cursor.execute(sql, para)
-            x = Student(*list(my_cursor.fetchone()))
-            return x
+            x = my_cursor.fetchone()
+            if x is None:
+                raise StudentNotFoundException('Invalid Student ID')
+            else:
+                return Student(*x)
+        except StudentNotFoundException as snfe:
+            print(f'An error occurred: ', snfe)
         except Exception as e:
             print(f'An error occurred: {e}')
 
@@ -98,8 +104,13 @@ class SISManager:
             '''
             para = (payment_id,)
             my_cursor.execute(sql, para)
-            x = Payment(*list(my_cursor.fetchone()))
-            return x
+            x = my_cursor.fetchone()
+            if x is None:
+                raise PaymentValidationException('Invalid Payment ID')
+            else:
+                return Payment(*x)
+        except PaymentValidationException as pve:
+            print(f'An error occurred: ', pve)
         except Exception as e:
             print(f'An error occurred: {e}')
 
@@ -111,8 +122,13 @@ class SISManager:
             '''
             para = (course_id,)
             my_cursor.execute(sql, para)
-            x = Course(*list(my_cursor.fetchone()))
-            return x
+            x = my_cursor.fetchone()
+            if x is None:
+                raise CourseNotFoundException('Invalid Course ID')
+            else:
+                return Course(*x)
+        except CourseNotFoundException as cnfe:
+            print(f'An error occurred: ', cnfe)
         except Exception as e:
             print(f'An error occurred: {e}')
 
@@ -124,8 +140,13 @@ class SISManager:
             '''
             para = (enrollment_id,)
             my_cursor.execute(sql, para)
-            x = Enrollment(*list(my_cursor.fetchone()))
-            return x
+            x = my_cursor.fetchone()
+            if x is None:
+                raise InvalidEnrollmentDataException('Invalid Enrollment ID')
+            else:
+                return Enrollment(*x)
+        except InvalidEnrollmentDataException as infe:
+            print(f'An error occurred: ', infe)
         except Exception as e:
             print(f'An error occurred: {e}')
 
@@ -137,8 +158,13 @@ class SISManager:
             '''
             para = (teacher_id,)
             my_cursor.execute(sql, para)
-            x = Teacher(*list(my_cursor.fetchone()))
-            return x
+            x = my_cursor.fetchone()
+            if x is None:
+                raise TeacherNotFoundException('Invalid Teacher ID')
+            else:
+                return Teacher(*x)
+        except TeacherNotFoundException as tnfe:
+            print(f'An error occurred: ', tnfe)
         except Exception as e:
             print(f'An error occurred: {e}')
 
